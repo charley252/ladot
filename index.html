@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>LA DOT</title>
+  <link rel="stylesheet" href="public/css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid p-3 m-3 text-center">
+    <div class="row">
+      <h1>L.A. Department Of Transporation</h1>
+      <h3>Electric Transit Bus Data Analysis</h3>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2">
+        <nav class="nav flex-column position-fixed">
+          <a class="nav-link actitve" href="#data assesement">Data Assessement</a>
+          <a class="nav-link actitve" href="#data preprocessing">Data Preprocessing</a>
+          <a class="nav-link actitve" href="#data wrangling">Data Wrangling</a>
+          <a class="nav-link actitve" href="#data analysis">Data Analysis</a>
+          <a class="nav-link disabled" href="#data modeling">Data Modeling</a>
+          <a class="nav-link disabled" href="#model evaluation">Model Evaluation</a>
+          <a class="nav-link disabled" href="#model deployment">Model Deployment</a>
+        </nav>
+      </div>
+      <div class="col-lg-10">
+        <section id="data assesement" class="h3">1. Data Assessement: surveying raw data.</section>
+        <p>We have collected 6 separate datasets from LA DOT, namely current, voltage, power, speed, GPS, and odometer. They are timeseries data for the month of August, 2020. Number of datapoints differ for each dataset as they were collected at
+          varying time intervals. </p>
+
+        <p>Elevation and temperature dataset were acquired from other sources. Using GPS coordinates from LA DOT, I used gpsvisualizer.com to upload our GPS file in 7 different chunks due to size limit.
+          gpsvisualizer.com taps into USGS(NED) dataset as well as NASA’s SRTM1 dataset among others.
+          For temperature, NOAA was able to provide by-the-hour LCD(local climatological data) dataset.</p>
+
+        <p>gpsvisualizer.com/elevation</p>
+
+        <p>noaa.gov->Tools&resources->Weather&Climate->Historic or certified weather data->Past weather data->Map Tool app</p>
+
+        <p>Varying amounts of timestamps line up among the datasets, i.e. date-time column match among the raw datasets. The count for timestamp alignment for each combination(n choose r) is displayed in the table below. Since this is a timeseries
+          dataset, it makes sense to align them from the raw data as much as possible from the beginning to minimize any unnecessary interpolation. Hence it was important to know which datasets aligned the most to help determine merging strategy
+          later on.</p>
+
+        <p>Other observations such as NaNs, duplicate data, range of dates, and average time interval are also noted in the Raw Data Summary Table below.</p>
+
+        <p>The consistency of data collection activity during the month of August is sporadic, as displayed in the Month Of August Activity Table below. There is a chunk of inactivity in the middle of the month. Instead of taking the raw data as a
+          monolithic chunk for one
+          month, I decided to take the parts of the data that had consistent stream of data for a contiguous time. The assumption is that the dataset represents one bus that had similar route throughout the month. We can confirm this with GPS
+          information and Google maps/earth.</p>
+
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Raw Data Summary Table</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: date-time resolution is in milliseconds.</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>Count Duplicated Timestamp</th>
+                  <th>Count NaNs</th>
+                  <th>Shape(row column)</th>
+                  <th>Min. Date</th>
+                  <th>Max. Date</th>
+                  <th>Date Range</th>
+                  <th>Avg. Time Interval</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Current</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Current 0
+                    dtype: int64</td>
+                  <td>(742082, 2)</td>
+                  <td>2020-08-01 12:09:44.499</td>
+                  <td>2020-08-30 12:59:59.645</td>
+                  <td>29 days 00:50:15.146000</td>
+                  <td>0 days 00:00:03.380509358</td>
+                </tr>
+                <tr>
+                  <th>Voltage</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Voltage 0
+                    dtype: int64</td>
+                  <td>(258381, 2)</td>
+                  <td>2020-08-01 12:09:44.499</td>
+                  <td>2020-08-30 12:57:19.642</td>
+                  <td>29 days 00:47:35.143000</td>
+                  <td>0 days 00:00:09.708357592</td>
+                </tr>
+                <tr>
+                  <th>Power</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Power 0
+                    dtype: int64</td>
+                  <td>(742000, 2)</td>
+                  <td>2020-08-01 12:09:44.499</td>
+                  <td>2020-08-30 12:59:59.645</td>
+                  <td>29 days 00:50:15.146000</td>
+                  <td>0 days 00:00:03.380882946</td>
+                </tr>
+                <tr>
+                  <th>Speed</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Speed 0
+                    dtype: int64</td>
+                  <td>(289669, 2)</td>
+                  <td>2020-08-01 12:20:28.183</td>
+                  <td>2020-08-30 12:54:22.646</td>
+                  <td>29 days 00:33:54.463000</td>
+                  <td>0 days 00:00:08.656896191</td>
+                </tr>
+                <tr>
+                  <th>Elevation</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Elevation 0
+                    dtype: int64</td>
+                  <td>(624301, 2)</td>
+                  <td>2020-08-01 12:07:42.929</td>
+                  <td>2020-08-30 12:59:58.734</td>
+                  <td>29 days 00:52:15.805000</td>
+                  <td>0 days 00:00:04.018471546</td>
+                </tr>
+                <tr>
+                  <th>Odometer</th>
+                  <td>0</td>
+                  <td>DateTime 0
+                    Odometer 0
+                    dtype: int64</td>
+                  <td>(42118, 2)</td>
+                  <td>2020-08-01 12:22:08.677</td>
+                  <td>2020-08-30 12:54:18.392</td>
+                  <td>29 days 00:32:09.715000</td>
+                  <td>0 days 00:00:59.535821145</td>
+                </tr>
+                <tr>
+                  <th>Temperature</th>
+                  <td>1</td>
+                  <td>DateTime 0
+                    Temperature 32
+                    dtype: int64</td>
+                  <td>(853, 2)</td>
+                  <td>2020-08-01 00:52:00.000</td>
+                  <td>2020-08-31 23:59:00.000</td>
+                  <td>30 days 23:07:00</td>
+                  <td>0 days 00:52:16.248534583</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks:</p>
+            <p class="card-text">There is 1 duplicate for temperature.</p>
+            <p class="card-text">There are 32 NaNs for temperature.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Month Of August Activity Table</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note:</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                </tr>
+                <tr>
+                  <th>DateTime</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>2020-08-01</th>
+                  <td>9534</td>
+                  <td>9534</td>
+                  <td>9534</td>
+                  <td>9534</td>
+                  <td>9534</td>
+                  <td>9534</td>
+                  <td>9534</td>
+                </tr>
+                <tr>
+                  <th>2020-08-02</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>2020-08-03</th>
+                  <td>12850</td>
+                  <td>12850</td>
+                  <td>12850</td>
+                  <td>12850</td>
+                  <td>12850</td>
+                  <td>12850</td>
+                  <td>12850</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>2020-08-04</th>
+                  <td>12530</td>
+                  <td>12530</td>
+                  <td>12530</td>
+                  <td>12530</td>
+                  <td>12530</td>
+                  <td>12530</td>
+                  <td>12530</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>2020-08-05</th>
+                  <td>12649</td>
+                  <td>12649</td>
+                  <td>12649</td>
+                  <td>12649</td>
+                  <td>12649</td>
+                  <td>12649</td>
+                  <td>12649</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>2020-08-06</th>
+                  <td>13765</td>
+                  <td>13765</td>
+                  <td>13765</td>
+                  <td>13765</td>
+                  <td>13765</td>
+                  <td>13765</td>
+                  <td>13765</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>2020-08-07</th>
+                  <td>14199</td>
+                  <td>14199</td>
+                  <td>14199</td>
+                  <td>14199</td>
+                  <td>14199</td>
+                  <td>14199</td>
+                  <td>14199</td>
+                </tr>
+                <tr>
+                  <th>2020-08-08</th>
+                  <td>8716</td>
+                  <td>8716</td>
+                  <td>8716</td>
+                  <td>8716</td>
+                  <td>8716</td>
+                  <td>8716</td>
+                  <td>8716</td>
+                </tr>
+                <tr>
+                  <th>2020-08-09</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-10</th>
+                  <td>12930</td>
+                  <td>12930</td>
+                  <td>12930</td>
+                  <td>12930</td>
+                  <td>12930</td>
+                  <td>12930</td>
+                  <td>12930</td>
+                </tr>
+                <tr>
+                  <th>2020-08-11</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-12</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-13</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-14</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-15</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-16</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-17</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2020-08-18</th>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>2020-08-19</th>
+                  <td>3151</td>
+                  <td>3151</td>
+                  <td>3151</td>
+                  <td>3151</td>
+                  <td>3151</td>
+                  <td>3151</td>
+                  <td>3151</td>
+                </tr>
+                <tr>
+                  <th>2020-08-20</th>
+                  <td>7725</td>
+                  <td>7725</td>
+                  <td>7725</td>
+                  <td>7725</td>
+                  <td>7725</td>
+                  <td>7725</td>
+                  <td>7725</td>
+                </tr>
+                <tr>
+                  <th>2020-08-21</th>
+                  <td>12653</td>
+                  <td>12653</td>
+                  <td>12653</td>
+                  <td>12653</td>
+                  <td>12653</td>
+                  <td>12653</td>
+                  <td>12653</td>
+                </tr>
+                <tr>
+                  <th>2020-08-22</th>
+                  <td>11193</td>
+                  <td>11193</td>
+                  <td>11193</td>
+                  <td>11193</td>
+                  <td>11193</td>
+                  <td>11193</td>
+                  <td>11193</td>
+                </tr>
+                <tr>
+                  <th>2020-08-23</th>
+                  <td>5573</td>
+                  <td>5573</td>
+                  <td>5573</td>
+                  <td>5573</td>
+                  <td>5573</td>
+                  <td>5573</td>
+                  <td>5573</td>
+                </tr>
+                <tr>
+                  <th>2020-08-24</th>
+                  <td>12659</td>
+                  <td>12659</td>
+                  <td>12659</td>
+                  <td>12659</td>
+                  <td>12659</td>
+                  <td>12659</td>
+                  <td>12659</td>
+                </tr>
+                <tr>
+                  <th>2020-08-25</th>
+                  <td>11731</td>
+                  <td>11731</td>
+                  <td>11731</td>
+                  <td>11731</td>
+                  <td>11731</td>
+                  <td>11731</td>
+                  <td>11731</td>
+                </tr>
+                <tr>
+                  <th>2020-08-26</th>
+                  <td>29</td>
+                  <td>29</td>
+                  <td>29</td>
+                  <td>29</td>
+                  <td>29</td>
+                  <td>29</td>
+                  <td>29</td>
+                </tr>
+                <tr>
+                  <th>2020-08-27</th>
+                  <td>7165</td>
+                  <td>7165</td>
+                  <td>7165</td>
+                  <td>7165</td>
+                  <td>7165</td>
+                  <td>7165</td>
+                  <td>7165</td>
+                </tr>
+                <tr>
+                  <th>2020-08-28</th>
+                  <td>6859</td>
+                  <td>6859</td>
+                  <td>6859</td>
+                  <td>6859</td>
+                  <td>6859</td>
+                  <td>6859</td>
+                  <td>6859</td>
+                </tr>
+                <tr>
+                  <th>2020-08-29</th>
+                  <td>12675</td>
+                  <td>12675</td>
+                  <td>12675</td>
+                  <td>12675</td>
+                  <td>12675</td>
+                  <td>12675</td>
+                  <td>12675</td>
+                </tr>
+                <tr>
+                  <th>2020-08-30</th>
+                  <td>1535</td>
+                  <td>1535</td>
+                  <td>1535</td>
+                  <td>1535</td>
+                  <td>1535</td>
+                  <td>1535</td>
+                  <td>1535</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks:</p>
+            <p class="card-text">There are contiguous days of inactivity as well as intermitten variations that seem significant enough for us to not ignore.</p>
+            <p class="card-text">8/3 - 8/7 seem to provide us with contiguous days of activity that is least varied for our analysis.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <section id="data preprocessing" class="h3">2. Data Preprocessing: duplicates, NaNs, resolution.</section>
+        <p>The resolution of the datasets is in milliseconds. I decided to drop the milliseconds and round up to seconds. This will result in more timestamp alignment among the datasets before we merge. It will also increase the probability of
+          returning true for duplicates, which we want to drop.</p>
+
+        <p>The comparison table for before and after changing resolution of the dataset is below.</p>
+
+        <p>We notice that the number of duplicates as well as timestamp alignment has increased.</p>
+
+        <p>NaNs have been dropped.</p>
+
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Raw Data Summary Table - after dropping NaNs.</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: date-time resolution is now in seconds after dropping millisecond.</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>Count Duplicated Timestamp</th>
+                  <th>Count NaNs</th>
+                  <th>Shape(row column)</th>
+                  <th>Min. Date</th>
+                  <th>Max. Date</th>
+                  <th>Date Range</th>
+                  <th>Avg. Time Interval</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Current</th>
+                  <td>541</td>
+                  <td>DateTime 0
+                    Current 0
+                    dtype: int64</td>
+                  <td>(742082, 2)</td>
+                  <td>2020-08-01 12:09:44</td>
+                  <td>2020-08-30 13:00:00</td>
+                  <td>29 days 00:50:16</td>
+                  <td>0 days 00:00:03.380510509</td>
+                </tr>
+                <tr>
+                  <th>Voltage</th>
+                  <td>227</td>
+                  <td>DateTime 0
+                    Voltage 0
+                    dtype: int64</td>
+                  <td>(258381, 2)</td>
+                  <td>2020-08-01 12:09:44</td>
+                  <td>2020-08-30 12:57:20</td>
+                  <td>29 days 00:47:36</td>
+                  <td>0 days 00:00:09.708360908</td>
+                </tr>
+                <tr>
+                  <th>Power</th>
+                  <td>461</td>
+                  <td>DateTime 0
+                    Power 0
+                    dtype: int64</td>
+                  <td>(742000, 2)</td>
+                  <td>2020-08-01 12:09:44</td>
+                  <td>2020-08-30 13:00:00</td>
+                  <td>29 days 00:50:16</td>
+                  <td>0 days 00:00:03.380884097</td>
+                </tr>
+                <tr>
+                  <th>Speed</th>
+                  <td>128</td>
+                  <td>DateTime 0
+                    Speed 0
+                    dtype: int64</td>
+                  <td>(289669, 2)</td>
+                  <td>2020-08-01 12:20:28</td>
+                  <td>2020-08-30 12:54:23</td>
+                  <td>29 days 00:33:55</td>
+                  <td>0 days 00:00:08.656898045</td>
+                </tr>
+                <tr>
+                  <th>Elevation</th>
+                  <td>1</td>
+                  <td>DateTime 0
+                    Elevation 0
+                    dtype: int64</td>
+                  <td>(624301, 2)</td>
+                  <td>2020-08-01 12:07:43</td>
+                  <td>2020-08-30 12:59:59</td>
+                  <td>29 days 00:52:16</td>
+                  <td>0 days 00:00:04.018471858</td>
+                </tr>
+                <tr>
+                  <th>Odometer</th>
+                  <td>7</td>
+                  <td>DateTime 0
+                    Odometer 0
+                    dtype: int64</td>
+                  <td>(42118, 2)</td>
+                  <td>2020-08-01 12:22:09</td>
+                  <td>2020-08-30 12:54:18</td>
+                  <td>29 days 00:32:09</td>
+                  <td>0 days 00:00:59.535804169</td>
+                </tr>
+                <tr>
+                  <th>Temperature</th>
+                  <td>1</td>
+                  <td>DateTime 0
+                    Temperature 0
+                    dtype: int64</td>
+                  <td>(853, 2)</td>
+                  <td>2020-08-01 00:52:00</td>
+                  <td>2020-08-31 23:59:00</td>
+                  <td>30 days 23:07:00</td>
+                  <td>0 days 00:52:16.248534583</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks:</p>
+            <p class="card-text">Note the increase in duplicates after dropping millisecond, as was expected.</p>
+            <p class="card-text">NaNs have been dropped.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <p>NaNs and duplicated data were simply dropped from the datasets before attempting to merge them. Duplicated timestamps would have given us trouble with pandas dateTimeIndex object functionality later on.</p>
+
+        <p>If our immediate standard goal is to create a base-table, we need to merge them, and therefore need a merge strategy. If we want the timeseries at consistent 2 seconds interval, we need to up-sample the dataset, which means we need an
+          interpolation strategy.</p>
+
+        <p>*Smallest average time interval is around 3 seconds, hence if we want 2 second interval base-table, we will have to up-sample and interpolate.</p>
+
+        <p>*One question might be, should we merge first before resampling or vice versa?</p>
+
+        <p>Note: I decided to forgo resampling/up-sampling for now.</p>
+
+        <section id="data wrangling" class="h3">3. Data Wrangling: merging, resampling, interpolation.</section>
+        <p>I decided to merge in the order of most alignment to the least and interpolate as needed per dataset.
+          For example, I merged the current and power sets first, because they had the highest count for timestamp alignment, i.e. matching timestamp, sacrificing some data points for the sake of perfect alignment in the original dataset, thereby
+          preserving some purity. Next was voltage and elevation and so on. Temperature and odometer were merged incorporating linear interpolation to fill in the gaps resulting from significantly less datapoint count, as that method made the most
+          sense.</p>
+
+        <p>Notes on units: Speed is assumed to be km/h. Elevation is in meters. Temperature is in Fahrenheit. Odometer is unknown.</p>
+
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Merged Dataset</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: for 8/3 - 8/7</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>9534</th>
+                  <td>2020-08-03 08:56:49</td>
+                  <td>25.8</td>
+                  <td>515</td>
+                  <td>13.2870</td>
+                  <td>68.7</td>
+                  <td>11</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                </tr>
+                <tr>
+                  <th>9535</th>
+                  <td>2020-08-03 08:56:50</td>
+                  <td>-5.2</td>
+                  <td>516</td>
+                  <td>-2.6832</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                </tr>
+                <tr>
+                  <th>9536</th>
+                  <td>2020-08-03 08:56:53</td>
+                  <td>1.8</td>
+                  <td>515</td>
+                  <td>0.9270</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                </tr>
+                <tr>
+                  <th>9537</th>
+                  <td>2020-08-03 08:56:58</td>
+                  <td>27.0</td>
+                  <td>514</td>
+                  <td>13.8780</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9538</th>
+                  <td>2020-08-03 08:57:02</td>
+                  <td>14.4</td>
+                  <td>515</td>
+                  <td>7.4160</td>
+                  <td>68.6</td>
+                  <td>8</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9539</th>
+                  <td>2020-08-03 08:57:03</td>
+                  <td>-5.3</td>
+                  <td>514</td>
+                  <td>-2.7242</td>
+                  <td>68.6</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9540</th>
+                  <td>2020-08-03 08:57:05</td>
+                  <td>-3.0</td>
+                  <td>516</td>
+                  <td>-1.5480</td>
+                  <td>68.6</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9541</th>
+                  <td>2020-08-03 08:57:06</td>
+                  <td>18.2</td>
+                  <td>515</td>
+                  <td>9.3730</td>
+                  <td>68.5</td>
+                  <td>4</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9542</th>
+                  <td>2020-08-03 08:57:08</td>
+                  <td>23.4</td>
+                  <td>514</td>
+                  <td>12.0276</td>
+                  <td>68.5</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>9543</th>
+                  <td>2020-08-03 08:57:17</td>
+                  <td>12.8</td>
+                  <td>516</td>
+                  <td>6.6048</td>
+                  <td>68.5</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>75517</th>
+                  <td>2020-08-07 22:03:16</td>
+                  <td>10.2</td>
+                  <td>494</td>
+                  <td>5.0388</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75518</th>
+                  <td>2020-08-07 22:03:22</td>
+                  <td>33.4</td>
+                  <td>493</td>
+                  <td>16.4662</td>
+                  <td>68.6</td>
+                  <td>6</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75519</th>
+                  <td>2020-08-07 22:03:23</td>
+                  <td>34.9</td>
+                  <td>493</td>
+                  <td>17.2057</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75520</th>
+                  <td>2020-08-07 22:03:29</td>
+                  <td>6.5</td>
+                  <td>494</td>
+                  <td>3.2110</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75521</th>
+                  <td>2020-08-07 22:03:46</td>
+                  <td>18.7</td>
+                  <td>493</td>
+                  <td>9.2191</td>
+                  <td>68.6</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75522</th>
+                  <td>2020-08-07 22:03:51</td>
+                  <td>35.6</td>
+                  <td>493</td>
+                  <td>17.5508</td>
+                  <td>68.5</td>
+                  <td>10</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75523</th>
+                  <td>2020-08-07 22:03:52</td>
+                  <td>36.6</td>
+                  <td>492</td>
+                  <td>18.0072</td>
+                  <td>68.5</td>
+                  <td>11</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75524</th>
+                  <td>2020-08-07 22:03:53</td>
+                  <td>-29.2</td>
+                  <td>494</td>
+                  <td>-14.4248</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75525</th>
+                  <td>2020-08-07 22:03:54</td>
+                  <td>18.5</td>
+                  <td>494</td>
+                  <td>9.1390</td>
+                  <td>68.5</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                </tr>
+                <tr>
+                  <th>75526</th>
+                  <td>2020-08-07 22:03:59</td>
+                  <td>-21.9</td>
+                  <td>494</td>
+                  <td>-10.8186</td>
+                  <td>68.4</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="card-text">Remarks:</p>
+            <p class="card-text">This merge has NOT been resampled/up-sampled to 2 second interval.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <div class="card border-primary my-4">
+          <h5 class="card-header">
+            Merged Dataset with Acceleration extrapolated.
+          </h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: speed was converted to m/s before calculating acceleration.</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                  <th>Acceleration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>9534</th>
+                  <td>2020-08-03 08:56:49</td>
+                  <td>25.8</td>
+                  <td>515</td>
+                  <td>13.2870</td>
+                  <td>68.7</td>
+                  <td>11</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>0.000000</td>
+                </tr>
+                <tr>
+                  <th>9535</th>
+                  <td>2020-08-03 08:56:50</td>
+                  <td>-5.2</td>
+                  <td>516</td>
+                  <td>-2.6832</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.555556</td>
+                </tr>
+                <tr>
+                  <th>9536</th>
+                  <td>2020-08-03 08:56:53</td>
+                  <td>1.8</td>
+                  <td>515</td>
+                  <td>0.9270</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.185185</td>
+                </tr>
+                <tr>
+                  <th>9537</th>
+                  <td>2020-08-03 08:56:58</td>
+                  <td>27.0</td>
+                  <td>514</td>
+                  <td>13.8780</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.111111</td>
+                </tr>
+                <tr>
+                  <th>9538</th>
+                  <td>2020-08-03 08:57:02</td>
+                  <td>14.4</td>
+                  <td>515</td>
+                  <td>7.4160</td>
+                  <td>68.6</td>
+                  <td>8</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.069444</td>
+                </tr>
+                <tr>
+                  <th>9539</th>
+                  <td>2020-08-03 08:57:03</td>
+                  <td>-5.3</td>
+                  <td>514</td>
+                  <td>-2.7242</td>
+                  <td>68.6</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                </tr>
+                <tr>
+                  <th>9540</th>
+                  <td>2020-08-03 08:57:05</td>
+                  <td>-3.0</td>
+                  <td>516</td>
+                  <td>-1.5480</td>
+                  <td>68.6</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                </tr>
+                <tr>
+                  <th>9541</th>
+                  <td>2020-08-03 08:57:06</td>
+                  <td>18.2</td>
+                  <td>515</td>
+                  <td>9.3730</td>
+                  <td>68.5</td>
+                  <td>4</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                </tr>
+                <tr>
+                  <th>9542</th>
+                  <td>2020-08-03 08:57:08</td>
+                  <td>23.4</td>
+                  <td>514</td>
+                  <td>12.0276</td>
+                  <td>68.5</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.138889</td>
+                </tr>
+                <tr>
+                  <th>9543</th>
+                  <td>2020-08-03 08:57:17</td>
+                  <td>12.8</td>
+                  <td>516</td>
+                  <td>6.6048</td>
+                  <td>68.5</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.061728</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>75517</th>
+                  <td>2020-08-07 22:03:16</td>
+                  <td>10.2</td>
+                  <td>494</td>
+                  <td>5.0388</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                </tr>
+                <tr>
+                  <th>75518</th>
+                  <td>2020-08-07 22:03:22</td>
+                  <td>33.4</td>
+                  <td>493</td>
+                  <td>16.4662</td>
+                  <td>68.6</td>
+                  <td>6</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.138889</td>
+                </tr>
+                <tr>
+                  <th>75519</th>
+                  <td>2020-08-07 22:03:23</td>
+                  <td>34.9</td>
+                  <td>493</td>
+                  <td>17.2057</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                </tr>
+                <tr>
+                  <th>75520</th>
+                  <td>2020-08-07 22:03:29</td>
+                  <td>6.5</td>
+                  <td>494</td>
+                  <td>3.2110</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.092593</td>
+                </tr>
+                <tr>
+                  <th>75521</th>
+                  <td>2020-08-07 22:03:46</td>
+                  <td>18.7</td>
+                  <td>493</td>
+                  <td>9.2191</td>
+                  <td>68.6</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                </tr>
+                <tr>
+                  <th>75522</th>
+                  <td>2020-08-07 22:03:51</td>
+                  <td>35.6</td>
+                  <td>493</td>
+                  <td>17.5508</td>
+                  <td>68.5</td>
+                  <td>10</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.055556</td>
+                </tr>
+                <tr>
+                  <th>75523</th>
+                  <td>2020-08-07 22:03:52</td>
+                  <td>36.6</td>
+                  <td>492</td>
+                  <td>18.0072</td>
+                  <td>68.5</td>
+                  <td>11</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                </tr>
+                <tr>
+                  <th>75524</th>
+                  <td>2020-08-07 22:03:53</td>
+                  <td>-29.2</td>
+                  <td>494</td>
+                  <td>-14.4248</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.555556</td>
+                </tr>
+                <tr>
+                  <th>75525</th>
+                  <td>2020-08-07 22:03:54</td>
+                  <td>18.5</td>
+                  <td>494</td>
+                  <td>9.1390</td>
+                  <td>68.5</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                </tr>
+                <tr>
+                  <th>75526</th>
+                  <td>2020-08-07 22:03:59</td>
+                  <td>-21.9</td>
+                  <td>494</td>
+                  <td>-10.8186</td>
+                  <td>68.4</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="card-text">Remarks:</p>
+            <p class="card-text">Acceleration is in m/s per second.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <section id="data analysis" class="h3">4. Data Analysis: stats, correlation, graphs.</section>
+        <p>Merge was performed by matching up date-time and dropping those that don't. The intervals themselves were not consistent in the raw data.</p>
+
+        <p>Therefore, it's a good idea to compare, by graph, the raw data and data after merge. Using the same slice of time, namely 8/3-8/7, we can observe for resemblance and correlation visually.</p>
+
+        <p>Once we are comfortable with the level of consistency between the raw and merged data, we can trust the merged dataset for further graphing and analysis. We can compare, current, power, voltage, elevation, speed for the graph.</p>
+
+        <p>We can pull correlation, covariance, and basic stats.</p>
+
+        <p>At this point, we can draw many stats from the merged dataset.
+          For example, we can pull average power use per hour or per day and so on.
+          These are represented with graphs below.</p>
+
+        <p>Power is our central feature of interest. We are trying to determine to what degree, real world situations affect power consumption and thereby influence energy use in the system. We assume grade, temperature or weather, acceleration,
+          weight, duration of idleness, etc…affect power output and energy use. We can then model real world scenarios to predict energy use and output forecast for policy use and planning.</p>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Current - original</h5>
+                 <img src="public/images/c_o.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Current - after merge</h5>
+                <img src="public/images/c_m.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Power - original</h5>
+                 <img src="public/images/p_o.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Power - after merge</h5>
+                <img src="public/images/p_m.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage - original</h5>
+                 <img src="public/images/v_o.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage - after merge</h5>
+                <img src="public/images/v_m.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Elevation - original</h5>
+                 <img src="public/images/e_o.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Elevation - after merge</h5>
+                <img src="public/images/e_m.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Speed - original</h5>
+                 <img src="public/images/s_o.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Speed - after merge</h5>
+                <img src="public/images/s_m.png" class="card-img-top">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <section id="data modeling" class="h3">5. Data Modeling</section>
+        <p>
+        </p>
+
+        <section id="model evaluation" class="h3">6. Model Evaluation</section>
+        <p>
+        </p>
+
+        <section id="model deployment" class="h3">7. Model Deployment</section>
+        <p>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <!---<script>
+    $(function() {
+      $("#summary_table").load("summary_table.html");
+    });
+  </script>--->
+
+</body>
+
+
+</html>
