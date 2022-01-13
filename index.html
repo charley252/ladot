@@ -9,10 +9,16 @@
   <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <style>
+    body {
+      position: relative;
+    }
+    .col-lg-10 {
+      position: relative;
+    }
   </style>
 </head>
 
-<body>
+<body data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0" overflow-y: scroll;>
   <div class="container-fluid p-3 m-3 text-center">
     <div class="row">
       <h1>L.A. Department Of Transporation</h1>
@@ -22,17 +28,23 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-2">
-        <nav class="nav flex-column position-fixed">
-          <a class="nav-link actitve" href="#data assesement">Data Assessement</a>
-          <a class="nav-link actitve" href="#data preprocessing">Data Preprocessing</a>
-          <a class="nav-link actitve" href="#data wrangling">Data Wrangling</a>
-          <a class="nav-link actitve" href="#data analysis">Data Analysis</a>
-          <a class="nav-link disabled" href="#data modeling">Data Modeling</a>
-          <a class="nav-link disabled" href="#model evaluation">Model Evaluation</a>
-          <a class="nav-link disabled" href="#model deployment">Model Deployment</a>
+        <!--class="nav flex-column position-fixed" -->
+        <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3 position-fixed">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link" href="#data assesement">Data Assessement</a>
+            <a class="nav-link" href="#data preprocessing">Data Preprocessing</a>
+            <a class="nav-link" href="#data wrangling">Data Wrangling</a>
+            <a class="nav-link" href="#data analysis">Data Analysis</a>
+
+            <a class="nav-link disabled" href="#data modeling">Data Modeling</a>
+            <a class="nav-link disabled" href="#model evaluation">Model Evaluation</a>
+            <a class="nav-link disabled" href="#model deployment">Model Deployment</a>
+            <a class="nav-link" href="#code">Code:</a>
+          </nav>
         </nav>
       </div>
-      <div class="col-lg-10">
+      <div class="col-lg-10" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0" overflow-y: scroll;>
         <section id="data assesement" class="h3">1. Data Assessement: surveying raw data.</section>
         <p>We have collected 6 separate datasets from LA DOT, namely current, voltage, power, speed, GPS, and odometer. They are timeseries data for the month of August, 2020. Number of datapoints differ for each dataset as they were collected at
           varying time intervals. </p>
@@ -1207,7 +1219,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Current - original</h5>
-                 <img src="public/images/c_o.png" class="card-img-top">
+                <img src="public/images/c_o.png" class="card-img-top">
 
               </div>
             </div>
@@ -1227,7 +1239,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Power - original</h5>
-                 <img src="public/images/p_o.png" class="card-img-top">
+                <img src="public/images/p_o.png" class="card-img-top">
 
               </div>
             </div>
@@ -1247,7 +1259,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Voltage - original</h5>
-                 <img src="public/images/v_o.png" class="card-img-top">
+                <img src="public/images/v_o.png" class="card-img-top">
 
               </div>
             </div>
@@ -1267,7 +1279,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Elevation - original</h5>
-                 <img src="public/images/e_o.png" class="card-img-top">
+                <img src="public/images/e_o.png" class="card-img-top">
 
               </div>
             </div>
@@ -1287,7 +1299,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Speed - original</h5>
-                 <img src="public/images/s_o.png" class="card-img-top">
+                <img src="public/images/s_o.png" class="card-img-top">
 
               </div>
             </div>
@@ -1303,6 +1315,146 @@
           </div>
         </div>
 
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Basic Stats</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note:</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                  <th>Acceleration</th>
+                  <th>Grade</th>
+                  <th>Angle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>count</th>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                  <td>65993.000000</td>
+                </tr>
+                <tr>
+                  <th>mean</th>
+                  <td>33.137240</td>
+                  <td>507.570727</td>
+                  <td>16.289559</td>
+                  <td>61.235867</td>
+                  <td>25.636795</td>
+                  <td>137457.348340</td>
+                  <td>74.282227</td>
+                  <td>-0.066585</td>
+                  <td>0.097548</td>
+                  <td>0.022044</td>
+                </tr>
+                <tr>
+                  <th>std</th>
+                  <td>158.717499</td>
+                  <td>5.965493</td>
+                  <td>80.353412</td>
+                  <td>22.791902</td>
+                  <td>15.013638</td>
+                  <td>218.650528</td>
+                  <td>3.588487</td>
+                  <td>0.886940</td>
+                  <td>1.540894</td>
+                  <td>1.387512</td>
+                </tr>
+                <tr>
+                  <th>min</th>
+                  <td>-444.300000</td>
+                  <td>483.000000</td>
+                  <td>-223.308900</td>
+                  <td>30.800000</td>
+                  <td>0.000000</td>
+                  <td>137084.500000</td>
+                  <td>66.000000</td>
+                  <td>-3.888889</td>
+                  <td>-12.496800</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>25%</th>
+                  <td>-73.500000</td>
+                  <td>504.000000</td>
+                  <td>-37.485000</td>
+                  <td>41.900000</td>
+                  <td>13.000000</td>
+                  <td>137269.600000</td>
+                  <td>72.000000</td>
+                  <td>-0.833333</td>
+                  <td>0.182880</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>50%</th>
+                  <td>31.300000</td>
+                  <td>508.000000</td>
+                  <td>15.931700</td>
+                  <td>60.000000</td>
+                  <td>25.000000</td>
+                  <td>137454.500000</td>
+                  <td>74.000000</td>
+                  <td>0.000000</td>
+                  <td>0.182880</td>
+                  <td>0.000000</td>
+                </tr>
+                <tr>
+                  <th>75%</th>
+                  <td>136.000000</td>
+                  <td>512.000000</td>
+                  <td>68.690700</td>
+                  <td>68.300000</td>
+                  <td>37.000000</td>
+                  <td>137648.500000</td>
+                  <td>77.000000</td>
+                  <td>0.555556</td>
+                  <td>0.182880</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>max</th>
+                  <td>506.200000</td>
+                  <td>523.000000</td>
+                  <td>253.606200</td>
+                  <td>134.100000</td>
+                  <td>96.000000</td>
+                  <td>137825.800000</td>
+                  <td>82.000000</td>
+                  <td>3.055556</td>
+                  <td>20.848320</td>
+                  <td>1.570796</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="card-text">Remarks:</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
 
 
         <section id="data modeling" class="h3">5. Data Modeling</section>
@@ -1316,6 +1468,9 @@
         <section id="model deployment" class="h3">7. Model Deployment</section>
         <p>
         </p>
+
+        <section id="code" class="h3">Code:</section>
+        <p><iframe src="la_dot_2.html" style="height:500px;width:1300px;" style="border: 3px solid red;" title="code"></iframe></p>
 
       </div>
     </div>
@@ -1331,3 +1486,56 @@
 
 
 </html>
+
+
+<!---
+<div class="card border-primary my-4">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+<div class="card border-primary my-4">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+<div class="card border-primary my-4">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+<div class="card border-primary my-4">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+<div class="card border-primary my-4">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+--->
