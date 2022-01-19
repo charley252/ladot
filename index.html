@@ -6,17 +6,22 @@
   <title>LA DOT</title>
   <link rel="stylesheet" href="public/css/styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <style>
-    .col-lg-10 {
+    body {
       position: relative;
+    }
+
+    .nav-pills {
+      font-size: 13px;
     }
   </style>
 </head>
 
-<body>
-  <div class="container-fluid p-3 m-3 text-center">
+<body data-bs-spy="scroll" data-bs-target="#navbar-spying" data-bs-offset="20" tabindex="0">
+  <div class="container-fluid p-3 text-center">
     <div class="row">
       <h1>L.A. Department Of Transporation</h1>
       <h3>Electric Transit Bus Data Analysis</h3>
@@ -24,24 +29,44 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-2">
+      <div class="col-lg-2 lh-1">
         <!--class="nav flex-column position-fixed" -->
-        <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3 position-fixed">
+        <nav id="navbar-spying" class="nav flex-column position-fixed">
           <nav class="nav nav-pills flex-column">
-            <a class="nav-link" href="#data assesement">Data Assessement</a>
-            <a class="nav-link" href="#data preprocessing">Data Preprocessing</a>
-            <a class="nav-link" href="#data wrangling">Data Wrangling</a>
-            <a class="nav-link" href="#data analysis">Data Analysis</a>
-
-            <a class="nav-link disabled" href="#data modeling">Data Modeling</a>
-            <a class="nav-link disabled" href="#model evaluation">Model Evaluation</a>
-            <a class="nav-link disabled" href="#model deployment">Model Deployment</a>
+            <a class="nav-link" href="#data-assesement">Data Assessement</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#raw1">Raw Data Summary Table</a>
+            </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#august_activity">August Activity Table</a>
+            </nav>
+            <a class="nav-link" href="#data-preprocessing">Data Preprocessing</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#raw2">Raw Data Summary Table<br>(NaNs dropped)</a>
+            </nav>
+            <a class="nav-link" href="#data-wrangling">Data Wrangling</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#merged">Merged Table</a>
+            </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#merged_acc">Merged Table <br>(w/acceleration)</a>
+            </nav>
+            <a class="nav-link" href="#data-analysis">Data Analysis</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#comparison_graph">Comparison Graphs</a>
+            </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#basic_stats">Basic Stats Table</a>
+            </nav>
+            <a class="nav-link disabled" href="#data-modeling">Data Modeling</a>
+            <a class="nav-link disabled" href="#model-evaluation">Model Evaluation</a>
+            <a class="nav-link disabled" href="#model-deployment">Model Deployment</a>
             <a class="nav-link" href="#code">Code:</a>
           </nav>
         </nav>
       </div>
-      <div class="col-lg-10" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0" overflow-y: scroll;>
-        <section id="data assesement" class="h3">1. Data Assessement: surveying raw data.</section>
+      <div class="col-lg-10">
+        <section id="data-assesement" class="h3">1. Data Assessement: surveying raw data.</section>
         <p>We have collected 6 separate datasets from LA DOT, namely current, voltage, power, speed, GPS, and odometer. They are timeseries data for the month of August, 2020. Number of datapoints differ for each dataset as they were collected at
           varying time intervals. </p>
 
@@ -59,12 +84,12 @@
 
         <p>Other observations such as NaNs, duplicate data, range of dates, and average time interval are also noted in the Raw Data Summary Table below.</p>
 
-        <p>The consistency of data collection activity during the month of August is sporadic, as displayed in the Month Of August Activity Table below. There is a chunk of inactivity in the middle of the month. Instead of taking the raw data as a
+        <p>The consistency of data collection activity during the month of August is sporadic, as displayed in the Month Of August Activity Table below. There is a period of inactivity in the middle of the month. Instead of taking the raw data as a
           monolithic chunk for one
           month, I decided to take the parts of the data that had consistent stream of data for a contiguous time. The assumption is that the dataset represents one bus that had similar route throughout the month. We can confirm this with GPS
           information and Google maps/earth.</p>
 
-        <div class="card border-primary my-4">
+        <div id="raw1" class="card border-primary my-4">
           <h5 class="card-header">Raw Data Summary Table</h5>
           <div class="card-body">
             <h5 class="card-title">Note: date-time resolution is in milliseconds.</h5>
@@ -72,7 +97,7 @@
               <thead>
                 <tr style="text-align: left;">
                   <th></th>
-                  <th>Count Duplicated Timestamp</th>
+                  <th>Count Duplicate Timestamp</th>
                   <th>Count NaNs</th>
                   <th>Shape(row column)</th>
                   <th>Min. Date</th>
@@ -175,10 +200,10 @@
           </div>
         </div>
 
-        <div class="card border-primary my-4">
+        <div id="august_activity" class="card border-primary my-4">
           <h5 class="card-header">Month Of August Activity Table</h5>
           <div class="card-body">
-            <h5 class="card-title">Note:</h5>
+            <h5 class="card-title">Note: values represent number of datapoints.</h5>
             <table border="1" class="table table-sm table-bordered">
               <thead>
                 <tr style="text-align: left;">
@@ -512,7 +537,7 @@
           </div>
         </div>
 
-        <section id="data preprocessing" class="h3">2. Data Preprocessing: duplicates, NaNs, resolution.</section>
+        <section id="data-preprocessing" class="h3">2. Data Preprocessing: duplicates, NaNs, resolution.</section>
         <p>The resolution of the datasets is in milliseconds. I decided to drop the milliseconds and round up to seconds. This will result in more timestamp alignment among the datasets before we merge. It will also increase the probability of
           returning true for duplicates, which we want to drop.</p>
 
@@ -522,7 +547,7 @@
 
         <p>NaNs have been dropped.</p>
 
-        <div class="card border-primary my-4">
+        <div id="raw2" class="card border-primary my-4">
           <h5 class="card-header">Raw Data Summary Table - after dropping NaNs.</h5>
           <div class="card-body">
             <h5 class="card-title">Note: date-time resolution is now in seconds after dropping millisecond.</h5>
@@ -530,7 +555,7 @@
               <thead>
                 <tr style="text-align: left;">
                   <th></th>
-                  <th>Count Duplicated Timestamp</th>
+                  <th>Count Duplicate Timestamp</th>
                   <th>Count NaNs</th>
                   <th>Shape(row column)</th>
                   <th>Min. Date</th>
@@ -633,7 +658,7 @@
           </div>
         </div>
 
-        <p>NaNs and duplicated data were simply dropped from the datasets before attempting to merge them. Duplicated timestamps would have given us trouble with pandas dateTimeIndex object functionality later on.</p>
+        <p>NaNs and duplicate data were simply dropped from the datasets before attempting to merge them. Duplicate timestamps would have given us trouble with pandas dateTimeIndex object functionality later on.</p>
 
         <p>If our immediate standard goal is to create a base-table, we need to merge them, and therefore need a merge strategy. If we want the timeseries at consistent 2 seconds interval, we need to up-sample the dataset, which means we need an
           interpolation strategy.</p>
@@ -644,7 +669,7 @@
 
         <p>Note: I decided to forgo resampling/up-sampling for now.</p>
 
-        <section id="data wrangling" class="h3">3. Data Wrangling: merging, resampling, interpolation.</section>
+        <section id="data-wrangling" class="h3">3. Data Wrangling: merging, resampling, interpolation.</section>
         <p>I decided to merge in the order of most alignment to the least and interpolate as needed per dataset.
           For example, I merged the current and power sets first, because they had the highest count for timestamp alignment, i.e. matching timestamp, sacrificing some data points for the sake of perfect alignment in the original dataset, thereby
           preserving some purity. Next was voltage and elevation and so on. Temperature and odometer were merged incorporating linear interpolation to fill in the gaps resulting from significantly less datapoint count, as that method made the most
@@ -652,7 +677,7 @@
 
         <p>Notes on units: Speed is assumed to be km/h. Elevation is in meters. Temperature is in Fahrenheit. Odometer is unknown.</p>
 
-        <div class="card border-primary my-4">
+        <div id="merged" class="card border-primary my-4">
           <h5 class="card-header">Merged Dataset</h5>
           <div class="card-body">
             <h5 class="card-title">Note: for 8/3 - 8/7</h5>
@@ -911,7 +936,7 @@
           </div>
         </div>
 
-        <div class="card border-primary my-4">
+        <div id="merged_acc" class="card border-primary my-4">
           <h5 class="card-header">
             Merged Dataset with Acceleration extrapolated.
           </h5>
@@ -1194,7 +1219,7 @@
           </div>
         </div>
 
-        <section id="data analysis" class="h3">4. Data Analysis: stats, correlation, graphs.</section>
+        <section id="data-analysis" class="h3">4. Data Analysis: stats, correlation, graphs.</section>
         <p>Merge was performed by matching up date-time and dropping those that don't. The intervals themselves were not consistent in the raw data.</p>
 
         <p>Therefore, it's a good idea to compare, by graph, the raw data and data after merge. Using the same slice of time, namely 8/3-8/7, we can observe for resemblance and correlation visually.</p>
@@ -1207,10 +1232,10 @@
           For example, we can pull average power use per hour or per day and so on.
           These are represented with graphs below.</p>
 
-        <p>Power is our central feature of interest. We are trying to determine to what degree, real world situations affect power consumption and thereby influence energy use in the system. We assume grade, temperature or weather, acceleration,
-          weight, duration of idleness, etc…affect power output and energy use. We can then model real world scenarios to predict energy use and output forecast for policy use and planning.</p>
+        <p>Power is our central feature of interest. We are trying to determine to what degree, real world situations affect power consumption (in comparison to the theoretical) and thereby influence energy use in the system. We assume (or hypothesize) grade, temperature or weather, acceleration (driving habits),
+          weight, duration of idleness, etc…affect power output/consumption and energy use. We can then model real world scenarios to predict energy use and economy and output forecast for policy use and planning.</p>
 
-        <div class="row">
+        <div id="comparison_graph" class="row">
           <div class="col-sm-6">
             <div class="card">
               <div class="card-body">
@@ -1311,7 +1336,7 @@
           </div>
         </div>
 
-        <div class="card border-primary my-4">
+        <div id="basic_stats" class="card border-primary my-4">
           <h5 class="card-header">Basic Stats</h5>
           <div class="card-body">
             <h5 class="card-title">Note:</h5>
@@ -1452,21 +1477,22 @@
 
 
 
-
-        <section id="data modeling" class="h3">5. Data Modeling</section>
+        <!--
+        <section id="data-modeling" class="h3">5. Data Modeling</section>
         <p>
         </p>
 
-        <section id="model evaluation" class="h3">6. Model Evaluation</section>
+        <section id="model-evaluation" class="h3">6. Model Evaluation</section>
         <p>
         </p>
 
-        <section id="model deployment" class="h3">7. Model Deployment</section>
+        <section id="model-deployment" class="h3">7. Model Deployment</section>
         <p>
         </p>
+      -->
 
         <section id="code" class="h3">Code:</section>
-        <p><iframe src="la_dot_2.html" style="height:500px;width:1300px;" style="border: 3px solid red;" title="code"></iframe></p>
+        <iframe src="la_dot_2.html" style="height:500px; width:1200px; border: 2px solid blue;" title="code"></iframe>
 
       </div>
     </div>
@@ -1480,8 +1506,19 @@
 
 </body>
 
-
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!---
