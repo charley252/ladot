@@ -21,12 +21,14 @@
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-spying" data-bs-offset="20" tabindex="0">
+
   <div class="container-fluid p-3 text-center">
     <div class="row">
       <h1>L.A. Department Of Transporation</h1>
       <h3>Electric Transit Bus Data Analysis</h3>
     </div>
   </div>
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-2 lh-1">
@@ -49,7 +51,7 @@
               <a class="nav-link ms-3 my-1" href="#merged">Merged Table</a>
             </nav>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-1" href="#merged_acc">Merged Table <br>(w/acceleration)</a>
+              <a class="nav-link ms-3 my-1" href="#merged_final">Merged Table <br>(w/acceleration, Grade, Angle)</a>
             </nav>
             <a class="nav-link" href="#data-analysis">Data Analysis</a>
             <nav class="nav nav-pills flex-column">
@@ -65,6 +67,7 @@
           </nav>
         </nav>
       </div>
+
       <div class="col-lg-10">
         <section id="data-assesement" class="h3">1. Data Assessement: surveying raw data.</section>
         <p>We have collected 6 separate datasets from LA DOT, namely current, voltage, power, speed, GPS, and odometer. They are timeseries data for the month of August, 2020. Number of datapoints differ for each dataset as they were collected at
@@ -88,6 +91,8 @@
           monolithic chunk for one
           month, I decided to take the parts of the data that had consistent stream of data for a contiguous time. The assumption is that the dataset represents one bus that had similar route throughout the month. We can confirm this with GPS
           information and Google maps/earth.</p>
+
+        <p class="fw-bold fst-italic text-danger">Notes on units: Speed is assumed to be km/h. Elevation is in meters. Temperature is in Fahrenheit. Odometer is unknown.</p>
 
         <div id="raw1" class="card border-primary my-4">
           <h5 class="card-header">Raw Data Summary Table</h5>
@@ -675,8 +680,6 @@
           preserving some purity. Next was voltage and elevation and so on. Temperature and odometer were merged incorporating linear interpolation to fill in the gaps resulting from significantly less datapoint count, as that method made the most
           sense.</p>
 
-        <p>Notes on units: Speed is assumed to be km/h. Elevation is in meters. Temperature is in Fahrenheit. Odometer is unknown.</p>
-
         <div id="merged" class="card border-primary my-4">
           <h5 class="card-header">Merged Dataset</h5>
           <div class="card-body">
@@ -936,13 +939,14 @@
           </div>
         </div>
 
-        <div id="merged_acc" class="card border-primary my-4">
+        <div id="merged_final" class="card border-primary my-4">
           <h5 class="card-header">
-            Merged Dataset with Acceleration extrapolated.
+            Merged Dataset with Acceleration, Grade and Angle extrapolated.
           </h5>
           <div class="card-body">
             <h5 class="card-title">Note: speed was converted to m/s before calculating acceleration.</h5>
-            <table border="1" class="table table-sm table-bordered">
+            <!--one mile grade-->
+            <!--<table border="1" class="table table-sm table-bordered">
               <thead>
                 <tr style="text-align: left;">
                   <th></th>
@@ -955,6 +959,8 @@
                   <th>Odometer</th>
                   <th>Temperature</th>
                   <th>Acceleration</th>
+                  <th>Grade</th>
+                  <th>Angle</th>
                 </tr>
               </thead>
               <tbody>
@@ -969,6 +975,8 @@
                   <td>137084.5</td>
                   <td>75.0</td>
                   <td>0.000000</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9535</th>
@@ -981,6 +989,8 @@
                   <td>137084.5</td>
                   <td>75.0</td>
                   <td>-0.555556</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9536</th>
@@ -993,6 +1003,8 @@
                   <td>137084.5</td>
                   <td>75.0</td>
                   <td>-0.185185</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9537</th>
@@ -1005,6 +1017,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>0.111111</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9538</th>
@@ -1017,6 +1031,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>-0.069444</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9539</th>
@@ -1029,6 +1045,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>-0.277778</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9540</th>
@@ -1041,6 +1059,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>-0.277778</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9541</th>
@@ -1053,6 +1073,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>-0.277778</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9542</th>
@@ -1065,6 +1087,8 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>0.138889</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>9543</th>
@@ -1077,9 +1101,13 @@
                   <td>137084.5</td>
                   <td>76.0</td>
                   <td>0.061728</td>
+                  <td>0.27432</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
                   <td>...</td>
                   <td>...</td>
                   <td>...</td>
@@ -1101,6 +1129,8 @@
                   <td>137825.7</td>
                   <td>73.0</td>
                   <td>-0.277778</td>
+                  <td>0.76200</td>
+                  <td>1.570796</td>
                 </tr>
                 <tr>
                   <th>75518</th>
@@ -1113,6 +1143,8 @@
                   <td>137825.7</td>
                   <td>73.0</td>
                   <td>-0.138889</td>
+                  <td>0.76200</td>
+                  <td>1.570796</td>
                 </tr>
                 <tr>
                   <th>75519</th>
@@ -1125,6 +1157,8 @@
                   <td>137825.7</td>
                   <td>73.0</td>
                   <td>0.277778</td>
+                  <td>0.76200</td>
+                  <td>1.570796</td>
                 </tr>
                 <tr>
                   <th>75520</th>
@@ -1137,6 +1171,8 @@
                   <td>137825.7</td>
                   <td>73.0</td>
                   <td>0.092593</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>75521</th>
@@ -1149,6 +1185,8 @@
                   <td>137825.7</td>
                   <td>73.0</td>
                   <td>0.000000</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>75522</th>
@@ -1161,6 +1199,8 @@
                   <td>137825.8</td>
                   <td>73.0</td>
                   <td>0.055556</td>
+                  <td>0.76200</td>
+                  <td>-1.274942</td>
                 </tr>
                 <tr>
                   <th>75523</th>
@@ -1173,6 +1213,8 @@
                   <td>137825.8</td>
                   <td>73.0</td>
                   <td>0.277778</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>75524</th>
@@ -1185,6 +1227,8 @@
                   <td>137825.8</td>
                   <td>73.0</td>
                   <td>-0.555556</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>75525</th>
@@ -1197,6 +1241,8 @@
                   <td>137825.8</td>
                   <td>73.0</td>
                   <td>-0.277778</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
                 </tr>
                 <tr>
                   <th>75526</th>
@@ -1209,12 +1255,645 @@
                   <td>137825.8</td>
                   <td>73.0</td>
                   <td>0.000000</td>
+                  <td>0.76200</td>
+                  <td>-1.570796</td>
+                </tr>
+              </tbody>
+            </table>-->
+            <!--half mile grade-->
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                  <th>Acceleration</th>
+                  <th>Grade</th>
+                  <th>Angle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>9534</th>
+                  <td>2020-08-03 08:56:49</td>
+                  <td>25.8</td>
+                  <td>515</td>
+                  <td>13.2870</td>
+                  <td>68.7</td>
+                  <td>11</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>0.000000</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9535</th>
+                  <td>2020-08-03 08:56:50</td>
+                  <td>-5.2</td>
+                  <td>516</td>
+                  <td>-2.6832</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.555556</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9536</th>
+                  <td>2020-08-03 08:56:53</td>
+                  <td>1.8</td>
+                  <td>515</td>
+                  <td>0.9270</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.185185</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9537</th>
+                  <td>2020-08-03 08:56:58</td>
+                  <td>27.0</td>
+                  <td>514</td>
+                  <td>13.8780</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.111111</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9538</th>
+                  <td>2020-08-03 08:57:02</td>
+                  <td>14.4</td>
+                  <td>515</td>
+                  <td>7.4160</td>
+                  <td>68.6</td>
+                  <td>8</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.069444</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9539</th>
+                  <td>2020-08-03 08:57:03</td>
+                  <td>-5.3</td>
+                  <td>514</td>
+                  <td>-2.7242</td>
+                  <td>68.6</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9540</th>
+                  <td>2020-08-03 08:57:05</td>
+                  <td>-3.0</td>
+                  <td>516</td>
+                  <td>-1.5480</td>
+                  <td>68.6</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9541</th>
+                  <td>2020-08-03 08:57:06</td>
+                  <td>18.2</td>
+                  <td>515</td>
+                  <td>9.3730</td>
+                  <td>68.5</td>
+                  <td>4</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9542</th>
+                  <td>2020-08-03 08:57:08</td>
+                  <td>23.4</td>
+                  <td>514</td>
+                  <td>12.0276</td>
+                  <td>68.5</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.138889</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9543</th>
+                  <td>2020-08-03 08:57:17</td>
+                  <td>12.8</td>
+                  <td>516</td>
+                  <td>6.6048</td>
+                  <td>68.5</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.061728</td>
+                  <td>0.48768</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>75517</th>
+                  <td>2020-08-07 22:03:16</td>
+                  <td>10.2</td>
+                  <td>494</td>
+                  <td>5.0388</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                  <td>0.18288</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75518</th>
+                  <td>2020-08-07 22:03:22</td>
+                  <td>33.4</td>
+                  <td>493</td>
+                  <td>16.4662</td>
+                  <td>68.6</td>
+                  <td>6</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.138889</td>
+                  <td>0.18288</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75519</th>
+                  <td>2020-08-07 22:03:23</td>
+                  <td>34.9</td>
+                  <td>493</td>
+                  <td>17.2057</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                  <td>0.18288</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75520</th>
+                  <td>2020-08-07 22:03:29</td>
+                  <td>6.5</td>
+                  <td>494</td>
+                  <td>3.2110</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.092593</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75521</th>
+                  <td>2020-08-07 22:03:46</td>
+                  <td>18.7</td>
+                  <td>493</td>
+                  <td>9.2191</td>
+                  <td>68.6</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75522</th>
+                  <td>2020-08-07 22:03:51</td>
+                  <td>35.6</td>
+                  <td>493</td>
+                  <td>17.5508</td>
+                  <td>68.5</td>
+                  <td>10</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.055556</td>
+                  <td>0.18288</td>
+                  <td>-1.274942</td>
+                </tr>
+                <tr>
+                  <th>75523</th>
+                  <td>2020-08-07 22:03:52</td>
+                  <td>36.6</td>
+                  <td>492</td>
+                  <td>18.0072</td>
+                  <td>68.5</td>
+                  <td>11</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75524</th>
+                  <td>2020-08-07 22:03:53</td>
+                  <td>-29.2</td>
+                  <td>494</td>
+                  <td>-14.4248</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.555556</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75525</th>
+                  <td>2020-08-07 22:03:54</td>
+                  <td>18.5</td>
+                  <td>494</td>
+                  <td>9.1390</td>
+                  <td>68.5</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75526</th>
+                  <td>2020-08-07 22:03:59</td>
+                  <td>-21.9</td>
+                  <td>494</td>
+                  <td>-10.8186</td>
+                  <td>68.4</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                  <td>0.18288</td>
+                  <td>-1.570796</td>
                 </tr>
               </tbody>
             </table>
+            <!--quarter mile grade-->
+            <!--<table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Elevation</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                  <th>Temperature</th>
+                  <th>Acceleration</th>
+                  <th>Grade</th>
+                  <th>Angle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>9534</th>
+                  <td>2020-08-03 08:56:49</td>
+                  <td>25.8</td>
+                  <td>515</td>
+                  <td>13.2870</td>
+                  <td>68.7</td>
+                  <td>11</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>0.000000</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9535</th>
+                  <td>2020-08-03 08:56:50</td>
+                  <td>-5.2</td>
+                  <td>516</td>
+                  <td>-2.6832</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.555556</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9536</th>
+                  <td>2020-08-03 08:56:53</td>
+                  <td>1.8</td>
+                  <td>515</td>
+                  <td>0.9270</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>75.0</td>
+                  <td>-0.185185</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9537</th>
+                  <td>2020-08-03 08:56:58</td>
+                  <td>27.0</td>
+                  <td>514</td>
+                  <td>13.8780</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.111111</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9538</th>
+                  <td>2020-08-03 08:57:02</td>
+                  <td>14.4</td>
+                  <td>515</td>
+                  <td>7.4160</td>
+                  <td>68.6</td>
+                  <td>8</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.069444</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9539</th>
+                  <td>2020-08-03 08:57:03</td>
+                  <td>-5.3</td>
+                  <td>514</td>
+                  <td>-2.7242</td>
+                  <td>68.6</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9540</th>
+                  <td>2020-08-03 08:57:05</td>
+                  <td>-3.0</td>
+                  <td>516</td>
+                  <td>-1.5480</td>
+                  <td>68.6</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9541</th>
+                  <td>2020-08-03 08:57:06</td>
+                  <td>18.2</td>
+                  <td>515</td>
+                  <td>9.3730</td>
+                  <td>68.5</td>
+                  <td>4</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>-0.277778</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9542</th>
+                  <td>2020-08-03 08:57:08</td>
+                  <td>23.4</td>
+                  <td>514</td>
+                  <td>12.0276</td>
+                  <td>68.5</td>
+                  <td>5</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.138889</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>9543</th>
+                  <td>2020-08-03 08:57:17</td>
+                  <td>12.8</td>
+                  <td>516</td>
+                  <td>6.6048</td>
+                  <td>68.5</td>
+                  <td>7</td>
+                  <td>137084.5</td>
+                  <td>76.0</td>
+                  <td>0.061728</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>75517</th>
+                  <td>2020-08-07 22:03:16</td>
+                  <td>10.2</td>
+                  <td>494</td>
+                  <td>5.0388</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                  <td>NaN</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75518</th>
+                  <td>2020-08-07 22:03:22</td>
+                  <td>33.4</td>
+                  <td>493</td>
+                  <td>16.4662</td>
+                  <td>68.6</td>
+                  <td>6</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>-0.138889</td>
+                  <td>NaN</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75519</th>
+                  <td>2020-08-07 22:03:23</td>
+                  <td>34.9</td>
+                  <td>493</td>
+                  <td>17.2057</td>
+                  <td>68.7</td>
+                  <td>7</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                  <td>NaN</td>
+                  <td>1.570796</td>
+                </tr>
+                <tr>
+                  <th>75520</th>
+                  <td>2020-08-07 22:03:29</td>
+                  <td>6.5</td>
+                  <td>494</td>
+                  <td>3.2110</td>
+                  <td>68.7</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.092593</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75521</th>
+                  <td>2020-08-07 22:03:46</td>
+                  <td>18.7</td>
+                  <td>493</td>
+                  <td>9.2191</td>
+                  <td>68.6</td>
+                  <td>9</td>
+                  <td>137825.7</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75522</th>
+                  <td>2020-08-07 22:03:51</td>
+                  <td>35.6</td>
+                  <td>493</td>
+                  <td>17.5508</td>
+                  <td>68.5</td>
+                  <td>10</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.055556</td>
+                  <td>NaN</td>
+                  <td>-1.274942</td>
+                </tr>
+                <tr>
+                  <th>75523</th>
+                  <td>2020-08-07 22:03:52</td>
+                  <td>36.6</td>
+                  <td>492</td>
+                  <td>18.0072</td>
+                  <td>68.5</td>
+                  <td>11</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.277778</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75524</th>
+                  <td>2020-08-07 22:03:53</td>
+                  <td>-29.2</td>
+                  <td>494</td>
+                  <td>-14.4248</td>
+                  <td>68.5</td>
+                  <td>9</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.555556</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75525</th>
+                  <td>2020-08-07 22:03:54</td>
+                  <td>18.5</td>
+                  <td>494</td>
+                  <td>9.1390</td>
+                  <td>68.5</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>-0.277778</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+                <tr>
+                  <th>75526</th>
+                  <td>2020-08-07 22:03:59</td>
+                  <td>-21.9</td>
+                  <td>494</td>
+                  <td>-10.8186</td>
+                  <td>68.4</td>
+                  <td>8</td>
+                  <td>137825.8</td>
+                  <td>73.0</td>
+                  <td>0.000000</td>
+                  <td>NaN</td>
+                  <td>-1.570796</td>
+                </tr>
+              </tbody>
+            </table>-->
 
             <p class="card-text">Remarks:</p>
             <p class="card-text">Acceleration is in m/s per second.</p>
+            <p class="card-text">Grade was calculated for 1/2 mile(or km) marker.</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
         </div>
