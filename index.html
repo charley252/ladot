@@ -37,37 +37,49 @@
           <nav class="nav nav-pills flex-column">
             <a class="nav-link" href="#data-assesement">Data Assessement</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#raw1">Raw Data Summary Table</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#raw1">Raw Data Summary Table</a>
             </nav>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#august_activity">August Activity Table</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#august_activity">August Activity Table</a>
             </nav>
             <a class="nav-link" href="#data-preprocessing">Data Preprocessing</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#raw2">Raw Data Summary Table<br>(NaNs dropped)</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#raw2">Raw Data Summary Table<br>(NaNs dropped)</a>
             </nav>
             <a class="nav-link" href="#data-wrangling">Data Wrangling</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#merged">Merged Table</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#merged">Merged Table</a>
             </nav>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#merged_final">Merged Table <br>(w/acceleration, Grade, Angle)</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#merged_final">Merged Table <br>(w/acceleration, Grade, Angle)</a>
             </nav>
             <a class="nav-link" href="#data-analysis">Data Analysis</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#comparison_graph">Comparison Graphs</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#comparison_graph">Comparison Graphs</a>
             </nav>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0" href="#basic_stats">Basic Stats Table</a>
-              <a class="nav-link ms-3 my-0" href="#correlation">Correlation Table</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#basic_stats">Basic Stats Table</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#correlation">Correlation Table</a>
             </nav>
-            <a class="nav-link" href="#gap-analysis">Gap Analysis</a>
+            <a class="nav-link" href="#gap-analysis">Gap Analysis(8/3-8/4)</a>
               <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-0" href="#current_gap1">Current</a>
-                <a class="nav-link ms-3 my-0" href="#speed_gap1">Speed</a>
-                <a class="nav-link ms-3 my-0" href="#merged_gap1">Merged</a>
-                <a class="nav-link ms-3 my-0" target="_blank" href="gap_graph.html">Gap Graph</a>
-                <a class="nav-link ms-3 my-0" href="#boxplot_grade">Boxplot(Grade vs. Power)</a>
+                <a class="nav-link ms-3 my-0 py-0" href="#current_gap1">Current</a>
+                <a class="nav-link ms-3 my-0 py-0" href="#speed_gap1">Speed</a>
+                <a class="nav-link ms-3 my-0 py-0" href="#merged_gap1">Merged</a>
+                <a class="nav-link ms-3 my-0 py-0" target="_blank" href="gap_graph.html">Gap Graph(8/3-8/7)</a>
+              </nav>
+            <a class="nav-link" href="#august_inactivity">Inactivity Analysis</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-0 py-0" href="#august_inactivity_table">Original CSV Data</a>
+              </nav>
+            <a class="nav-link" href="#voltage_spike">Voltage Spike/Gap Analysis</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-0 py-0" href="#voltage_graphs">Voltage Graphs</a>
+                <a class="nav-link ms-3 my-0 py-0" target="_blank" href="voltage_graph_zoom.html">Voltage Graph Zoom</a>
+              </nav>
+            <a class="nav-link" href="#graphs">Graphs</a>
+              <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-0 py-0" href="#boxplot_grade">Boxplot(Grade vs. Power)</a>
               </nav>
             <a class="nav-link disabled" href="#data-modeling">Data Modeling</a>
             <a class="nav-link disabled" href="#model-evaluation">Model Evaluation</a>
@@ -942,7 +954,6 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <p class="card-text">This merge has NOT been resampled/up-sampled to 2 second interval.</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
@@ -1899,7 +1910,6 @@
                 </tr>
               </tbody>
             </table>-->
-
             <p class="card-text">Remarks:</p>
             <p class="card-text">Acceleration is in m/s per second.</p>
             <p class="card-text">Grade was calculated for 1/2 mile(or km) marker.</p>
@@ -1930,7 +1940,6 @@
               <div class="card-body">
                 <h5 class="card-title">Current - original</h5>
                 <img src="public/images/c_o.png" class="card-img-top">
-
               </div>
             </div>
           </div>
@@ -1939,12 +1948,10 @@
               <div class="card-body">
                 <h5 class="card-title">Current - after merge</h5>
                 <img src="public/images/c_m.png" class="card-img-top">
-
               </div>
             </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col-sm-6">
             <div class="card">
@@ -2153,7 +2160,6 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
@@ -2311,7 +2317,6 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
@@ -39806,11 +39811,11 @@
                   <th>2020-08-04 02:58:54</th>
                   <td>1.6</td>
                 </tr>
-                <tr>
+                <tr id="current_gap1">
                   <th>2020-08-04 02:58:55</th>
                   <td>1.8</td>
                 </tr>
-                <tr id="current_gap1" class="bg-warning">
+                <tr class="bg-warning">
                   <th>2020-08-04 02:58:57</th>
                   <td>0.1</td>
                 </tr>
@@ -43736,13 +43741,12 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
         </div>
 
-        <div id="speed_gap1" class="card border-primary my-4">
+        <div class="card border-primary my-4">
           <h5 class="card-header">Original Speed Data</h5>
           <div class="card-body">
             <h5 class="card-title">Note: 2020-08-03 18:40:00 - 2020-08-04 09:10:00</h5>
@@ -44054,7 +44058,7 @@
                   <th>2020-08-03 18:42:48</th>
                   <td>4</td>
                 </tr>
-                <tr>
+                <tr id="speed_gap1">
                   <th>2020-08-03 18:42:49</th>
                   <td>2</td>
                 </tr>
@@ -44600,13 +44604,12 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
         </div>
 
-        <div id="merged_gap1" class="card border-primary my-4">
+        <div class="card border-primary my-4">
           <h5 class="card-header">Merged Data</h5>
           <div class="card-body">
             <h5 class="card-title">Note: 2020-08-03 18:40:00 - 2020-08-04 09:10:00</h5>
@@ -44952,7 +44955,7 @@
                   <td>0.18288</td>
                   <td>-1.570796</td>
                 </tr>
-                <tr>
+                <tr id="merged_gap1">
                   <th>2020-08-03 18:41:43</th>
                   <td>0.2</td>
                   <td>496</td>
@@ -45799,32 +45802,437 @@
                 </tr>
               </tbody>
             </table>
-
             <p class="card-text">Remarks:</p>
             <a href="#" class="btn btn-primary">Link To Code</a>
           </div>
         </div>
 
-        <div id="boxplot_grade" class="row">
+        <section id="august_inactivity" class="h3">6. Inactivity Analysis:</section>
+        <p>Zero activity: We can see that dates 8/12 - 8/17 had no activity. There are no timestamps in the original csv file, so we can conclude that it(charging, EV bus, ECU or whatever) was offline. For dates 8/2, 8/9, 8/11 being zero is due to the merging and resampling process to 'Day' frequency that dropped unmatching timestamps and/or ignored missing resolution for resampling purpose. In other words, the 'Count Of Activity' table was made from a merged dataset that dropped unmathcing timestamps already. Same reasoning can be applied to 8/18 where only 3 timestamps matched-up and 'survived' the resampling process.</p>
 
+        <div id="august_inactivity_table" class="card border-primary my-4">
+          <h5 class="card-header">Orignal CSV Data Activity Count</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: Month Of August</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>Current</th>
+                  <th>Voltage</th>
+                  <th>Power</th>
+                  <th>Speed</th>
+                  <th>Odometer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>8-2</th>
+                  <td>9187</td>
+                  <td>693</td>
+                  <td>9207</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-9</th>
+                  <td>17543</td>
+                  <td>819</td>
+                  <td>17546</td>
+                  <td>1</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>8-11</th>
+                  <td>19860</td>
+                  <td>2029</td>
+                  <td>19860</td>
+                  <td>4</td>
+                  <td>2029</td>
+                </tr>
+                <tr>
+                  <th>8-12</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-13</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-14</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-15</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-16</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-17</th>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+                <tr>
+                  <th>8-18</th>
+                  <td>8126</td>
+                  <td>229</td>
+                  <td>8119</td>
+                  <td>40</td>
+                  <td>2</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks:</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+        <section id="voltage_spike" class="h3">7. Voltage Spike/Gap Analysis:</section>
+        <p>Closer examination of voltage graph - we want to know the nature of the zig-zag lines and see what is going on in those sections. (highlighed row reflects the point on the graph in question at tooltip).</p>
+        <div id="voltage_graphs" class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3-8/4 </h5>
+                <img src="public/images/voltage_analysis/voltage_gap1a.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3-8/4</h5>
+                <img src="public/images/voltage_analysis/voltage_gap1b.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Voltage Gap</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: Original Raw Data.</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Voltage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>29494</th>
+                  <td>2020-08-03 21:31:30</td>
+                  <td>535</td>
+                </tr>
+                <tr>
+                  <th>29495</th>
+                  <td>2020-08-03 21:31:37</td>
+                  <td>535</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29496</th>
+                  <td>2020-08-03 21:31:38</td>
+                  <td>0</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29497</th>
+                  <td>2020-08-04 00:39:23</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>29498</th>
+                  <td>2020-08-04 00:39:24</td>
+                  <td>525</td>
+                </tr>
+                <tr>
+                  <th>29499</th>
+                  <td>2020-08-04 00:41:28</td>
+                  <td>525</td>
+                </tr>
+                <tr>
+                  <th>29500</th>
+                  <td>2020-08-04 00:41:29</td>
+                  <td>0</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks: highlighted rows represents the tooltip point on the graphs above.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+        <div id="voltage_graph2" class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3 21:29:53-21:30:40</h5>
+                <img src="public/images/voltage_analysis/voltage_gap2a.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3 21:29:53-21:30:40</h5>
+                <img src="public/images/voltage_analysis/voltage_gap2b.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="voltage_graph2" class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3 21:29:53-21:30:40</h5>
+                <img src="public/images/voltage_analysis/voltage_gap2c.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Voltage 8/3 21:29:53-21:30:40</h5>
+                <img src="public/images/voltage_analysis/voltage_gap2d.png" class="card-img-top">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card border-primary my-4">
+          <h5 class="card-header">Voltage Gap</h5>
+          <div class="card-body">
+            <h5 class="card-title">Note: Original Raw Data.</h5>
+            <table border="1" class="table table-sm table-bordered">
+              <thead>
+                <tr style="text-align: left;">
+                  <th></th>
+                  <th>DateTime</th>
+                  <th>Voltage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>29442</th>
+                  <td>2020-08-03 21:29:52</td>
+                  <td>546</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29443</th>
+                  <td>2020-08-03 21:29:53</td>
+                  <td>547</td>
+                </tr>
+                <tr>
+                  <th>29444</th>
+                  <td>2020-08-03 21:29:58</td>
+                  <td>547</td>
+                </tr>
+                <tr>
+                  <th>29445</th>
+                  <td>2020-08-03 21:29:59</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29446</th>
+                  <td>2020-08-03 21:30:05</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29447</th>
+                  <td>2020-08-03 21:30:06</td>
+                  <td>547</td>
+                </tr>
+                <tr>
+                  <th>29448</th>
+                  <td>2020-08-03 21:30:07</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29449</th>
+                  <td>2020-08-03 21:30:08</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29450</th>
+                  <td>2020-08-03 21:30:09</td>
+                  <td>547</td>
+                </tr>
+                <tr>
+                  <th>29451</th>
+                  <td>2020-08-03 21:30:12</td>
+                  <td>547</td>
+                </tr>
+                <tr>
+                  <th>29452</th>
+                  <td>2020-08-03 21:30:13</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29453</th>
+                  <td>2020-08-03 21:30:14</td>
+                  <td>548</td>
+                </tr>
+                <tr>
+                  <th>29454</th>
+                  <td>2020-08-03 21:30:15</td>
+                  <td>549</td>
+                </tr>
+                <tr>
+                  <th>29455</th>
+                  <td>2020-08-03 21:30:16</td>
+                  <td>550</td>
+                </tr>
+                <tr>
+                  <th>29456</th>
+                  <td>2020-08-03 21:30:17</td>
+                  <td>551</td>
+                </tr>
+                <tr>
+                  <th>29457</th>
+                  <td>2020-08-03 21:30:18</td>
+                  <td>552</td>
+                </tr>
+                <tr>
+                  <th>29458</th>
+                  <td>2020-08-03 21:30:19</td>
+                  <td>553</td>
+                </tr>
+                <tr>
+                  <th>29459</th>
+                  <td>2020-08-03 21:30:20</td>
+                  <td>553</td>
+                </tr>
+                <tr>
+                  <th>29460</th>
+                  <td>2020-08-03 21:30:21</td>
+                  <td>554</td>
+                </tr>
+                <tr>
+                  <th>29461</th>
+                  <td>2020-08-03 21:30:22</td>
+                  <td>555</td>
+                </tr>
+                <tr>
+                  <th>29462</th>
+                  <td>2020-08-03 21:30:24</td>
+                  <td>555</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29463</th>
+                  <td>2020-08-03 21:30:25</td>
+                  <td>556</td>
+                </tr>
+                <tr>
+                  <th>29464</th>
+                  <td>2020-08-03 21:30:26</td>
+                  <td>556</td>
+                </tr>
+                <tr>
+                  <th>29465</th>
+                  <td>2020-08-03 21:30:27</td>
+                  <td>557</td>
+                </tr>
+                <tr>
+                  <th>29466</th>
+                  <td>2020-08-03 21:30:28</td>
+                  <td>557</td>
+                </tr>
+                <tr>
+                  <th>29467</th>
+                  <td>2020-08-03 21:30:29</td>
+                  <td>558</td>
+                </tr>
+                <tr>
+                  <th>29468</th>
+                  <td>2020-08-03 21:30:31</td>
+                  <td>558</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29469</th>
+                  <td>2020-08-03 21:30:32</td>
+                  <td>559</td>
+                </tr>
+                <tr>
+                  <th>29470</th>
+                  <td>2020-08-03 21:30:33</td>
+                  <td>558</td>
+                </tr>
+                <tr>
+                  <th>29471</th>
+                  <td>2020-08-03 21:30:35</td>
+                  <td>558</td>
+                </tr>
+                <tr>
+                  <th>29472</th>
+                  <td>2020-08-03 21:30:36</td>
+                  <td>556</td>
+                </tr>
+                <tr>
+                  <th>29473</th>
+                  <td>2020-08-03 21:30:37</td>
+                  <td>551</td>
+                </tr>
+                <tr>
+                  <th>29474</th>
+                  <td>2020-08-03 21:30:38</td>
+                  <td>549</td>
+                </tr>
+                <tr>
+                  <th>29475</th>
+                  <td>2020-08-03 21:30:39</td>
+                  <td>547</td>
+                </tr>
+                <tr class="bg-warning">
+                  <th>29476</th>
+                  <td>2020-08-03 21:30:40</td>
+                  <td>546</td>
+                </tr>
+                <tr>
+                  <th>29477</th>
+                  <td>2020-08-03 21:30:41</td>
+                  <td>545</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="card-text">Remarks: highlighted rows represents the tooltip point on the graphs above.</p>
+            <a href="#" class="btn btn-primary">Link To Code</a>
+          </div>
+        </div>
+
+
+        <div id="graphs"</div>
+        <div id="boxplot_grade" class="row">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Grade vs. Power vs. Day</h5>
                 <img src="public/images/boxplot_grade.png" class="card-img-top">
-
               </div>
             </div>
-
         </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -45864,10 +46272,10 @@
 <div class="card border-primary my-4">
   <h5 class="card-header">Featured</h5>
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
+    <h5 class="card-title">Note:</h5>
 
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <p class="card-text">Remarks:</p>
+    <a href="#" class="btn btn-primary">Link To Code</a>
   </div>
 </div>
 
