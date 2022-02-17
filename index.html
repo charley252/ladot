@@ -62,25 +62,26 @@
               <a class="nav-link ms-3 my-0 py-0" href="#correlation">Correlation Table</a>
             </nav>
             <a class="nav-link" href="#gap-analysis">Gap Analysis(8/3-8/4)</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-0 py-0" href="#current_gap1">Current</a>
-                <a class="nav-link ms-3 my-0 py-0" href="#speed_gap1">Speed</a>
-                <a class="nav-link ms-3 my-0 py-0" href="#merged_gap1">Merged</a>
-                <a class="nav-link ms-3 my-0 py-0" target="_blank" href="gap_graph.html">Gap Graph(8/3-8/7)</a>
-              </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-0 py-0" href="#current_gap1">Current</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#speed_gap1">Speed</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#merged_gap1">Merged</a>
+              <a class="nav-link ms-3 my-0 py-0" target="_blank" href="gap_graph.html">Gap Graph(8/3-8/7)</a>
+            </nav>
             <a class="nav-link" href="#august_inactivity">Inactivity Analysis</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-0 py-0" href="#august_inactivity_table">Original CSV Data</a>
-              </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-0 py-0" href="#august_inactivity_table">Original CSV Data</a>
+            </nav>
             <a class="nav-link" href="#voltage_spike">Voltage Spike/Gap Analysis</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-0 py-0" href="#voltage_graphs">Voltage Graphs</a>
-                <a class="nav-link ms-3 my-0 py-0" target="_blank" href="voltage_graph_zoom.html">Voltage Graph Zoom</a>
-              </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-0 py-0" href="#voltage_graphs">Voltage Graphs</a>
+              <a class="nav-link ms-3 my-0 py-0" target="_blank" href="voltage_graph_zoom.html">Voltage Graph Zoom</a>
+            </nav>
             <a class="nav-link" href="#graphs">Graphs</a>
-              <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-0 py-0" href="#boxplot_grade">Boxplot(Grade vs. Power)</a>
-              </nav>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-0 py-0" href="#boxplot_grade">Boxplot(Grade vs. Power)</a>
+              <a class="nav-link ms-3 my-0 py-0" target="_blank" href="august_threeToseven_route_map.html">8/3-8/7 Route Map</a>
+            </nav>
             <a class="nav-link disabled" href="#data-modeling">Data Modeling</a>
             <a class="nav-link disabled" href="#model-evaluation">Model Evaluation</a>
             <a class="nav-link disabled" href="#model-deployment">Model Deployment</a>
@@ -2324,8 +2325,8 @@
 
         <section id="gap-analysis" class="h3">5. Gap Analysis:</section>
         <p>We want to zoom-in and understand what the gap in the graphs mean, both in the
-        original data and merged counterpart. We will examine original dataset for current and speed. Merged dataset will also
-        be compared. We will focus on slice of time for the first gap.</p>
+          original data and merged counterpart. We will examine original dataset for current and speed. Merged dataset will also
+          be compared. We will focus on slice of time for the first gap.</p>
 
         <div id="" class="card border-primary my-4">
           <h5 class="card-header">Original Current Data</h5>
@@ -45808,7 +45809,9 @@
         </div>
 
         <section id="august_inactivity" class="h3">6. Inactivity Analysis:</section>
-        <p>Zero activity: We can see that dates 8/12 - 8/17 had no activity. There are no timestamps in the original csv file, so we can conclude that it(charging, EV bus, ECU or whatever) was offline. For dates 8/2, 8/9, 8/11 being zero is due to the merging and resampling process to 'Day' frequency that dropped unmatching timestamps and/or ignored missing resolution for resampling purpose. In other words, the 'Count Of Activity' table was made from a merged dataset that dropped unmathcing timestamps already. Same reasoning can be applied to 8/18 where only 3 timestamps matched-up and 'survived' the resampling process.</p>
+        <p>Zero activity: We can see that dates 8/12 - 8/17 had no activity. There are no timestamps in the original csv file, so we can conclude that it(charging, EV bus, ECU or whatever) was offline. For dates 8/2, 8/9, 8/11 being zero is due to
+          the merging and resampling process to 'Day' frequency that dropped unmatching timestamps and/or ignored missing resolution for resampling purpose. In other words, the 'Count Of Activity' table was made from a merged dataset that dropped
+          unmathcing timestamps already. Same reasoning can be applied to 8/18 where only 3 timestamps matched-up and 'survived' the resampling process.</p>
 
         <div id="august_inactivity_table" class="card border-primary my-4">
           <h5 class="card-header">Orignal CSV Data Activity Count</h5>
@@ -46223,20 +46226,19 @@
           </div>
         </div>
 
-
-        <div id="graphs"</div>
-        <div id="boxplot_grade" class="row">
+        <div id="graphs" </div>
+          <div id="boxplot_grade" class="row">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Grade vs. Power vs. Day</h5>
                 <img src="public/images/boxplot_grade.png" class="card-img-top">
               </div>
             </div>
-        </div>
+          </div>
 
 
 
-        <!--
+          <!--
         <section id="data-modeling" class="h3">5. Data Modeling</section>
         <p>
         </p>
@@ -46250,14 +46252,14 @@
         </p>
       -->
 
-        <section id="code" class="h3">Code:</section>
-        <iframe src="la_dot_2_1.html" style="height:500px; width:1200px; border: 2px solid blue;" title="code"></iframe>
+          <section id="code" class="h3">Code:</section>
+          <iframe src="la_dot_3.html" style="height:500px; width:1200px; border: 2px solid blue;" title="code"></iframe>
 
+        </div>
       </div>
     </div>
-  </div>
 
-  <!---<script>
+    <!---<script>
     $(function() {
       $("#summary_table").load("summary_table.html");
     });
@@ -46276,36 +46278,6 @@
 
     <p class="card-text">Remarks:</p>
     <a href="#" class="btn btn-primary">Link To Code</a>
-  </div>
-</div>
-
-<div class="card border-primary my-4">
-  <h5 class="card-header">Featured</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-
-<div class="card border-primary my-4">
-  <h5 class="card-header">Featured</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-
-<div class="card border-primary my-4">
-  <h5 class="card-header">Featured</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 
