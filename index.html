@@ -79,10 +79,12 @@
             </nav>
             <a class="nav-link" href="#graphs">Graphs</a>
             <nav class="nav nav-pills flex-column">
-              <a class="nav-link ms-3 my-0 py-0" href="#boxplot_grade">Boxplot(Grade vs. Power)</a>
+              <a class="nav-link ms-3 my-0 py-0" href="#boxplot_grade_power">Boxplot(Grade vs. Power)</a>
               <a class="nav-link ms-3 my-0 py-0" href="#boxplot_speed_power">Boxplot(Speed vs. Power)</a>
               <a class="nav-link ms-3 my-0 py-0" target="_blank" href="august_threeToseven_route_map.html">8/3-8/7 Route Map</a>
+              <a class="nav-link ms-3 my-0 py-0" target="_blank" href="other_graphs.html">Other Graphs</a>
             </nav>
+            <a class="nav-link" target="_blank" href="august_threeToseven_i_report.html">August 3-7 Subset Report</a>
             <a class="nav-link disabled" href="#data-modeling">Data Modeling</a>
             <a class="nav-link disabled" href="#model-evaluation">Model Evaluation</a>
             <a class="nav-link disabled" href="#model-deployment">Model Deployment</a>
@@ -232,7 +234,7 @@
         <div id="august_activity" class="card border-primary my-4">
           <h5 class="card-header">Month Of August Activity Table</h5>
           <div class="card-body">
-            <h5 class="card-title">Note: values represent number of datapoints.</h5>
+            <h5 class="card-title">Note: values represent number of datapoints. (merged dataset)</h5>
             <table border="1" class="table table-sm table-bordered">
               <thead>
                 <tr style="text-align: left;">
@@ -45181,7 +45183,7 @@
         <p>Zero activity: We can see that dates 8/12 - 8/17 had no activity. There are no timestamps in the original csv file, so we can conclude that it(charging, EV bus, ECU or whatever) was offline. For dates 8/2, 8/9, 8/11 being zero is due to
           the merging and resampling process to 'Day' frequency that dropped unmatching timestamps and/or ignored missing resolution for resampling purpose. In other words, the 'Count Of Activity' table (August Activity Table above) was made from a
           merged dataset that dropped
-          unmathcing timestamps already. Same reasoning can be applied to 8/18 where only 3 timestamps matched-up and 'survived' the resampling process.</p>
+          unmatching timestamps already. Same reasoning can be applied to 8/18 where only 3 timestamps matched-up and 'survived' the resampling process.</p>
 
         <div id="august_inactivity_table" class="card border-primary my-4">
           <h5 class="card-header">Orignal CSV Data Activity Count</h5>
@@ -45597,7 +45599,7 @@
         </div>
 
         <div id="graphs" </div>
-          <div id="boxplot_grade" class="row">
+          <div id="boxplot_grade_power" class="row">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Grade vs. Power vs. Day</h5>
@@ -45605,21 +45607,6 @@
               </div>
             </div>
           </div>
-
-          <!--
-        <section id="data-modeling" class="h3">5. Data Modeling</section>
-        <p>
-        </p>
-
-        <section id="model-evaluation" class="h3">6. Model Evaluation</section>
-        <p>
-        </p>
-
-        <section id="model-deployment" class="h3">7. Model Deployment</section>
-        <p>
-        </p>
-        -->
-        <div id="graphs" </div>
           <div id="boxplot_speed_power" class="row">
             <div class="card">
               <div class="card-body">
